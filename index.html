@@ -1,575 +1,767 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>硬件入门 · 从零到简历项目计划</title>
     <style>
-        * {
+        /* ========== 基础重置 ========== */
+        *, *::before, *::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+
+        :root {
+            --bg: #ffffff;
+            --bg-subtle: #f6f8fa;
+            --bg-muted: #f0f2f5;
+            --border: #d0d7de;
+            --border-muted: #e8ecf0;
+            --text: #1f2328;
+            --text-secondary: #59636e;
+            --text-muted: #818b98;
+            --accent: #0969da;
+            --accent-hover: #0550ae;
+            --accent-subtle: #ddf4ff;
+            --success: #1a7f37;
+            --success-subtle: #dafbe1;
+            --attention: #9a6700;
+            --attention-subtle: #fff8c5;
+            --danger: #d1242f;
+            --danger-subtle: #ffebe9;
+            --purple: #8250df;
+            --purple-subtle: #fbefff;
+            --radius: 6px;
+            --radius-lg: 12px;
         }
 
         body {
-            background: #f6f8fc;
-            color: #1e293b;
-            padding: 2rem 1.5rem;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--bg);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .wrap {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 40px 24px 80px;
+        }
+
+        /* ========== 标题体系 ========== */
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            line-height: 1.25;
+            letter-spacing: -0.02em;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 8px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            line-height: 1.3;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-muted);
+            margin: 48px 0 16px;
+            letter-spacing: -0.01em;
+        }
+
+        h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 8px;
+        }
+
+        h4 {
+            font-size: 0.9375rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        /* ========== 顶部元信息 ========== */
+        .meta {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
             line-height: 1.5;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
+        .meta .lead {
+            font-size: 1.0625rem;
+            color: var(--text);
+            margin-bottom: 12px;
         }
 
-        /* header */
-        .hero {
-            background: #ffffff;
-            border-radius: 2rem;
-            padding: 2rem 2rem 1.8rem;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
-            margin-bottom: 2rem;
-            border: 1px solid #e9eef4;
-        }
-
-        .hero h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            letter-spacing: -0.01em;
-            color: #0f172a;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .hero h1 span {
-            background: #eef2ff;
-            color: #3b4e8c;
-            font-size: 0.9rem;
+        .meta .badge {
+            display: inline-block;
+            font-size: 0.75rem;
             font-weight: 500;
-            padding: 0.2rem 1rem;
-            border-radius: 40px;
-            letter-spacing: 0.3px;
-        }
-
-        .hero p {
-            margin-top: 0.8rem;
-            color: #475569;
-            font-size: 1.1rem;
-            max-width: 850px;
-            border-left: 4px solid #94a3b8;
-            padding-left: 1.2rem;
-        }
-
-        /* 核心原则卡片 */
-        .principle-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.2rem;
-            margin-top: 1.5rem;
-        }
-
-        .principle-item {
-            background: #f8fafc;
-            border-radius: 1rem;
-            padding: 0.9rem 1.3rem;
-            border: 1px solid #e2e8f0;
-            display: flex;
-            align-items: center;
-            gap: 0.7rem;
-            flex: 1 1 200px;
-        }
-
-        .principle-item .emoji {
-            font-size: 1.6rem;
-        }
-
-        .principle-item strong {
-            color: #0f172a;
-        }
-
-        .principle-item small {
-            color: #64748b;
-            font-size: 0.85rem;
-            display: block;
-        }
-
-        /* 阶段网格 */
-        .section-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin: 2.5rem 0 1.2rem 0;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #0f172a;
-        }
-
-        .section-title .badge {
-            background: #e2e8f0;
-            color: #1e293b;
-            font-size: 0.8rem;
-            font-weight: 500;
-            padding: 0.2rem 0.7rem;
-            border-radius: 30px;
-        }
-
-        .phase-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .phase-card {
-            background: #ffffff;
-            border-radius: 1.5rem;
-            padding: 1.5rem 1.4rem 1.6rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
-            border: 1px solid #e9eef4;
-            transition: transform 0.1s ease, box-shadow 0.2s ease;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .phase-card:hover {
-            box-shadow: 0 16px 24px -8px rgba(0, 0, 0, 0.08);
-            transform: translateY(-2px);
-        }
-
-        .phase-num {
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: #3b82f6;
-            background: #eff6ff;
-            padding: 0.2rem 0.8rem;
+            padding: 2px 8px;
             border-radius: 20px;
-            align-self: flex-start;
-            margin-bottom: 1rem;
+            background: var(--accent-subtle);
+            color: var(--accent);
+            border: 1px solid #b6e3ff;
+            margin-right: 6px;
+            vertical-align: middle;
         }
 
-        .phase-card h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 0.75rem;
-            color: #0f172a;
+        /* ========== 提示块（GitHub 风格 callout） ========== */
+        .callout {
+            border-left: 4px solid var(--accent);
+            background: var(--bg-subtle);
+            border-radius: var(--radius);
+            padding: 12px 16px;
+            margin: 16px 0;
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
         }
 
-        .phase-card p {
-            color: #475569;
-            font-size: 0.95rem;
-            margin-bottom: 1rem;
-            flex: 1;
+        .callout strong {
+            color: var(--text);
         }
 
-        .task-list {
+        .callout--attention {
+            border-left-color: var(--attention);
+            background: var(--attention-subtle);
+        }
+
+        .callout--success {
+            border-left-color: var(--success);
+            background: var(--success-subtle);
+        }
+
+        .callout--purple {
+            border-left-color: var(--purple);
+            background: var(--purple-subtle);
+        }
+
+        /* ========== 列表 ========== */
+        ul {
             list-style: none;
-            margin-top: 0.5rem;
         }
 
-        .task-list li {
-            font-size: 0.9rem;
-            padding: 0.45rem 0 0.45rem 1.5rem;
+        ul li {
             position: relative;
-            color: #334155;
-            border-bottom: 1px dashed #eef2f6;
+            padding-left: 22px;
+            margin-bottom: 6px;
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
         }
 
-        .task-list li:last-child {
+        ul li::before {
+            content: "";
+            position: absolute;
+            left: 6px;
+            top: 10px;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--text-muted);
+        }
+
+        /* ========== 表格 ========== */
+        .table-wrap {
+            overflow-x: auto;
+            margin: 16px 0;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+        }
+
+        th {
+            text-align: left;
+            font-weight: 600;
+            padding: 10px 16px;
+            background: var(--bg-subtle);
+            border-bottom: 1px solid var(--border);
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 10px 16px;
+            border-bottom: 1px solid var(--border-muted);
+            vertical-align: top;
+            color: var(--text-secondary);
+        }
+
+        tr:last-child td {
             border-bottom: none;
         }
 
-        .task-list li::before {
-            content: "▹";
-            position: absolute;
-            left: 0;
-            color: #3b82f6;
-            font-weight: 700;
+        td strong {
+            color: var(--text);
+            font-weight: 600;
         }
 
-        .highlight-tag {
-            background: #fef9c3;
-            color: #854d0e;
-            font-size: 0.75rem;
-            font-weight: 500;
-            padding: 0.15rem 0.6rem;
-            border-radius: 30px;
-            display: inline-block;
-            margin-right: 0.5rem;
+        /* ========== 阶段卡片（紧凑列表式） ========== */
+        .phase-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            margin: 16px 0;
         }
 
-        /* 调试方法部分 */
-        .debug-section {
-            background: #ffffff;
-            border-radius: 2rem;
-            padding: 1.8rem 2rem 2rem;
-            border: 1px solid #e9eef4;
-            box-shadow: 0 10px 20px -10px rgba(0, 0, 0, 0.05);
-            margin: 2rem 0 1.8rem;
-        }
-
-        .debug-grid {
+        .phase-item {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 1.2rem;
-            margin-top: 1.5rem;
+            grid-template-columns: 120px 1fr;
+            border-bottom: 1px solid var(--border);
         }
 
-        .debug-step {
-            background: #f8fafc;
-            border-radius: 1.2rem;
-            padding: 1.2rem 1rem;
-            border-left: 5px solid #3b82f6;
+        .phase-item:last-child {
+            border-bottom: none;
         }
 
-        .debug-step .step-num {
-            font-size: 1.6rem;
-            font-weight: 800;
-            color: #cbd5e1;
-            line-height: 1;
-            margin-bottom: 0.3rem;
+        .phase-head {
+            background: var(--bg-subtle);
+            padding: 16px;
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
         }
 
-        .debug-step h4 {
+        .phase-head .num {
+            font-size: 0.75rem;
             font-weight: 600;
-            margin-bottom: 0.4rem;
-            color: #0f172a;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
         }
 
-        .debug-step p {
-            font-size: 0.9rem;
-            color: #475569;
-        }
-
-        /* 简历部分 */
-        .resume-block {
-            background: #0f172a;
-            color: #f1f5f9;
-            border-radius: 2rem;
-            padding: 1.8rem 2rem 2rem;
-            margin: 2rem 0;
-        }
-
-        .resume-block h2 {
-            font-size: 1.5rem;
+        .phase-head h3 {
+            font-size: 0.9375rem;
             font-weight: 600;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #ffffff;
-        }
-
-        .resume-flex {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 2rem;
-        }
-
-        .resume-bad, .resume-good {
-            flex: 1 1 280px;
-            border-radius: 1.2rem;
-            padding: 1.4rem 1.5rem;
-            background: #1e293b;
-        }
-
-        .resume-bad h3, .resume-good h3 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .resume-bad h3 span {
-            background: #7f1d1d;
-            color: #fecaca;
-            font-size: 0.7rem;
-            padding: 0.2rem 0.8rem;
-            border-radius: 30px;
-        }
-
-        .resume-good h3 span {
-            background: #14532d;
-            color: #bbf7d0;
-            font-size: 0.7rem;
-            padding: 0.2rem 0.8rem;
-            border-radius: 30px;
-        }
-
-        .resume-bad p, .resume-good p {
-            font-size: 0.95rem;
-            color: #cbd5e1;
-            background: #0f172a;
-            padding: 0.8rem 1rem;
-            border-radius: 0.8rem;
-            margin-bottom: 0.8rem;
-            border-left: 4px solid #64748b;
-        }
-
-        .resume-good p {
-            border-left-color: #22c55e;
-        }
-
-        .resume-bad small, .resume-good small {
-            color: #94a3b8;
-            display: block;
-            margin-top: 0.6rem;
-        }
-
-        /* 资源提醒 */
-        .resource-tip {
-            background: #f1f5f9;
-            border-radius: 1.2rem;
-            padding: 1.2rem 1.8rem;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
-            border: 1px solid #d1d9e6;
-            margin: 2rem 0 1rem;
-        }
-
-        .resource-tip .left {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .resource-tip .left .icon {
-            font-size: 2rem;
-        }
-
-        .resource-tip p {
-            color: #1e293b;
-            font-weight: 500;
+            color: var(--text);
             margin: 0;
         }
 
-        .resource-tip .small-note {
-            color: #475569;
-            font-size: 0.9rem;
-            font-weight: 400;
-            margin-top: 0.2rem;
+        .phase-head .tag-new {
+            display: inline-block;
+            font-size: 0.6875rem;
+            font-weight: 600;
+            padding: 1px 6px;
+            border-radius: 4px;
+            background: var(--purple-subtle);
+            color: var(--purple);
+            border: 1px solid #d8c4f5;
+            align-self: flex-start;
+            margin-top: 2px;
         }
 
-        .btn-ghost {
-            background: #ffffff;
-            border: 1px solid #cbd5e1;
-            padding: 0.6rem 1.2rem;
-            border-radius: 40px;
+        .phase-body {
+            padding: 16px 20px;
+        }
+
+        .phase-body .desc {
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+
+        .phase-body ul {
+            margin-bottom: 10px;
+        }
+
+        .phase-body ul li {
+            font-size: 0.875rem;
+            margin-bottom: 3px;
+        }
+
+        .phase-body .output {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            padding-top: 8px;
+            border-top: 1px dashed var(--border-muted);
+        }
+
+        .phase-body .output strong {
+            color: var(--text);
+        }
+
+        .phase-body blockquote {
+            margin-top: 10px;
+            padding: 8px 12px;
+            background: var(--bg-subtle);
+            border-left: 3px solid var(--text-muted);
+            border-radius: 0 var(--radius) var(--radius) 0;
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
+            font-style: normal;
+        }
+
+        .phase-body blockquote strong {
+            color: var(--text);
+            font-style: normal;
+        }
+
+        /* ========== 对比块 ========== */
+        .compare {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 16px 0;
+        }
+
+        .compare-card {
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 16px;
+        }
+
+        .compare-card--bad {
+            border-color: var(--danger);
+            background: var(--danger-subtle);
+        }
+
+        .compare-card--good {
+            border-color: var(--success);
+            background: var(--success-subtle);
+        }
+
+        .compare-card h4 {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 10px;
+            font-size: 0.875rem;
+        }
+
+        .compare-card p {
+            font-size: 0.875rem;
+            color: var(--text);
+            margin-bottom: 6px;
+            line-height: 1.5;
+        }
+
+        .compare-card small {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+        }
+
+        /* ========== 调试步骤（编号列表） ========== */
+        .steps {
+            counter-reset: step;
+            margin: 16px 0;
+        }
+
+        .steps li {
+            counter-increment: step;
+            position: relative;
+            padding-left: 44px;
+            margin-bottom: 14px;
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+        }
+
+        .steps li::before {
+            content: counter(step, decimal-leading-zero);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--accent);
+            background: var(--accent-subtle);
+            border: 1px solid #b6e3ff;
+            border-radius: 50%;
+        }
+
+        .steps li strong {
+            display: block;
+            color: var(--text);
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        /* ========== 观点网格 ========== */
+        .quotes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+
+        .quote-item {
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 14px 16px;
+            background: var(--bg-subtle);
+        }
+
+        .quote-item h4 {
+            font-size: 0.875rem;
+            margin-bottom: 6px;
+        }
+
+        .quote-item p {
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+            line-height: 1.5;
+        }
+
+        .quote-item .from {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* ========== 资源条 ========== */
+        .resource {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            padding: 16px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--bg-subtle);
+            margin: 16px 0;
+        }
+
+        .resource .icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            line-height: 1.4;
+        }
+
+        .resource h4 {
+            margin-bottom: 4px;
+        }
+
+        .resource p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        /* ========== 分隔线 ========== */
+        hr {
+            border: none;
+            border-top: 1px solid var(--border-muted);
+            margin: 40px 0;
+        }
+
+        /* ========== 内联标记 ========== */
+        code {
+            font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+            font-size: 0.85em;
+            background: var(--bg-muted);
+            padding: 0.2em 0.4em;
+            border-radius: 4px;
+            color: var(--text);
+        }
+
+        .tag {
+            display: inline-block;
+            font-size: 0.75rem;
             font-weight: 500;
-            color: #1e293b;
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: 0.15s;
+            padding: 1px 7px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            color: var(--text-secondary);
+            margin-right: 4px;
         }
 
-        .btn-ghost:hover {
-            background: #eef2f6;
-        }
-
-        /* footer */
-        .footer-note {
-            text-align: center;
-            color: #64748b;
-            font-size: 0.9rem;
-            margin-top: 2rem;
-            padding-top: 1rem;
-            border-top: 1px solid #d9e2ef;
-        }
-
-        @media (max-width: 600px) {
-            body {
-                padding: 1rem;
+        /* ========== 响应式 ========== */
+        @media (max-width: 720px) {
+            .wrap {
+                padding: 24px 16px 60px;
             }
-            .hero {
-                padding: 1.5rem;
+            h1 {
+                font-size: 1.5rem;
             }
-            .hero h1 {
-                font-size: 1.6rem;
+            h2 {
+                font-size: 1.25rem;
+                margin-top: 36px;
             }
-            .debug-section, .resume-block {
-                padding: 1.5rem;
+            .phase-item {
+                grid-template-columns: 1fr;
+            }
+            .phase-head {
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+                flex-direction: row;
+                align-items: center;
+                gap: 8px;
+                padding: 10px 16px;
+            }
+            .phase-head .num {
+                display: none;
+            }
+            .compare {
+                grid-template-columns: 1fr;
+            }
+            .quotes {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Hero 区域 -->
-        <div class="hero">
-            <h1>
-                🧰 硬件入门 · 简历项目计划
-                <span>从打板到调试闭环</span>
-            </h1>
-            <p>
-                不要贪多，做一个“能讲清楚”的完整小项目。<br>
-                电源 → MCU → 传感器 → 通信 → 调试 → 简历亮点。
-            </p>
-            <div class="principle-grid">
-                <div class="principle-item">
-                    <div class="emoji">🎯</div>
-                    <div><strong>选小闭环</strong><small>温湿度采集 / 联网节点</small></div>
-                </div>
-                <div class="principle-item">
-                    <div class="emoji">🔍</div>
-                    <div><strong>系统化排查</strong><small>电源→信号→焊接→交叉验证</small></div>
-                </div>
-                <div class="principle-item">
-                    <div class="emoji">📝</div>
-                    <div><strong>用结果说话</strong><small>背景+行动+结果，带数据</small></div>
-                </div>
+<div class="wrap">
+
+    <!-- ===== 标题 ===== -->
+    <h1>硬件入门：从零到简历项目计划</h1>
+    <p class="meta">
+        <span class="badge">网友验证版</span>
+        <span class="tag">24条回复共识</span>
+        <span class="tag">ESP32开局</span>
+        <span class="tag">先飞线再打样</span>
+    </p>
+    <p class="meta lead">
+        不要贪多，做一个<strong>“能讲清楚”</strong>的完整小项目。飞线验证 → 电源/MCU → 传感器 → 通信 → 调试 → 简历亮点。
+    </p>
+
+    <div class="callout">
+        <strong>📌 依据：</strong>烧饼社区「硬件应该怎么学」24条网友回复整理。核心共识：<strong>必须动手 · 源码不必复刻 · ESP32开局 · 先飞线再打样 · AI全程辅助</strong>。
+    </div>
+
+    <!-- ===== 阶段计划 ===== -->
+    <h2>五阶段学习计划</h2>
+
+    <div class="phase-list">
+
+        <!-- 阶段0 -->
+        <div class="phase-item">
+            <div class="phase-head">
+                <span class="num">阶段 0</span>
+                <h3>🧪 飞线验证</h3>
+                <span class="tag-new">新增</span>
+            </div>
+            <div class="phase-body">
+                <p class="desc">打板之前，先用洞洞板和飞线把核心电路跑通。成本极低，却能提前暴露大部分设计问题。</p>
+                <ul>
+                    <li>洞洞板 + 飞线搭核心电路</li>
+                    <li>验证电源、MCU 最小系统</li>
+                    <li>串口能打印日志</li>
+                    <li>确认传感器通信正常</li>
+                </ul>
+                <p class="output"><strong>产出</strong> 飞线验证通过的电路方案</p>
+                <blockquote>
+                    <strong>yys222：</strong>第一块板子别急着画太复杂的，先拿洞洞板飞线把电路跑通再去打样，不然打回来的板子一堆问题排查起来更费时间。
+                </blockquote>
             </div>
         </div>
 
-        <!-- 阶段计划 -->
-        <div class="section-title">
-            📌 四阶段学习计划
-            <span class="badge">按顺序推进</span>
-        </div>
-        <div class="phase-grid">
-            <!-- 阶段1 -->
-            <div class="phase-card">
-                <div class="phase-num">阶段 01</div>
-                <h3>🔌 电源 & 最小系统</h3>
-                <p>先把板子“点亮”，理解供电、复位、时钟。这是所有硬件的地基。</p>
-                <ul class="task-list">
-                    <li>LDO 电源电路（3.3V）</li>
-                    <li>MCU 最小系统（STM32/ESP32）</li>
-                    <li>复位电路 + 晶振（可选）</li>
-                    <li>用万用表测电压、对地阻抗</li>
-                </ul>
-                <div style="margin-top: 0.8rem;"><span class="highlight-tag">产出</span> 能正常上电、可下载程序的板子</div>
+        <!-- 阶段1 -->
+        <div class="phase-item">
+            <div class="phase-head">
+                <span class="num">阶段 1</span>
+                <h3>🔌 电源 &amp; 最小系统</h3>
             </div>
-            <!-- 阶段2 -->
-            <div class="phase-card">
-                <div class="phase-num">阶段 02</div>
-                <h3>🌡️ 传感器 & 通信</h3>
-                <p>让板子“感知世界”并输出数据。串口是硬件调试的眼睛。</p>
-                <ul class="task-list">
+            <div class="phase-body">
+                <p class="desc">先把板子“点亮”，理解供电、复位、时钟。推荐 ESP32 开局，成本低、容错高、自带 WiFi。</p>
+                <ul>
+                    <li>LDO 电源电路（3.3V）</li>
+                    <li>ESP32 / STM32 最小系统</li>
+                    <li>复位电路 + 晶振（可选）</li>
+                    <li>万用表测电压、对地阻抗</li>
+                </ul>
+                <p class="output"><strong>产出</strong> 能正常上电、可下载程序的板子</p>
+                <blockquote>
+                    <strong>肏屎皇：</strong>先拿 ESP32 随便做个小东西把原理图到打板焊接走一遍，嘉立创打样经常有免费券，前期其实花不了多少钱。
+                </blockquote>
+            </div>
+        </div>
+
+        <!-- 阶段2 -->
+        <div class="phase-item">
+            <div class="phase-head">
+                <span class="num">阶段 2</span>
+                <h3>🌡️ 传感器 &amp; 通信</h3>
+            </div>
+            <div class="phase-body">
+                <p class="desc">让板子“感知世界”并输出数据。串口是硬件调试的眼睛，缺源码就用 AI 补。</p>
+                <ul>
                     <li>I2C/SPI 传感器（SHT30/DHT11）</li>
                     <li>串口打印温湿度数据</li>
-                    <li>LCD/OLED 显示（可选）</li>
                     <li>逻辑分析仪抓 I2C 波形</li>
+                    <li>用 AI 辅助写驱动代码</li>
                 </ul>
-                <div style="margin-top: 0.8rem;"><span class="highlight-tag">产出</span> 串口稳定输出传感器数据</div>
+                <p class="output"><strong>产出</strong> 串口稳定输出传感器数据</p>
+                <blockquote>
+                    <strong>yundou：</strong>源码这东西没啥复刻的必要，用 AI 辅助你一步步写都可以。缺源码反而逼你自己动脑子。
+                </blockquote>
             </div>
-            <!-- 阶段3 -->
-            <div class="phase-card">
-                <div class="phase-num">阶段 03</div>
-                <h3>📶 联网 & 上报</h3>
-                <p>增加无线/有线通信，把数据发出去，形成完整的物联网节点。</p>
-                <ul class="task-list">
-                    <li>ESP32 WiFi / STM32+ESP8266</li>
+        </div>
+
+        <!-- 阶段3 -->
+        <div class="phase-item">
+            <div class="phase-head">
+                <span class="num">阶段 3</span>
+                <h3>📶 联网 &amp; 上报</h3>
+            </div>
+            <div class="phase-body">
+                <p class="desc">增加无线通信，把数据发出去，形成完整的物联网节点。</p>
+                <ul>
+                    <li>ESP32 WiFi 联网</li>
                     <li>MQTT 或 HTTP 上报数据</li>
                     <li>断网重连、日志记录</li>
                     <li>用手机/电脑接收数据</li>
                 </ul>
-                <div style="margin-top: 0.8rem;"><span class="highlight-tag">产出</span> 联网数据上报小节点</div>
+                <p class="output"><strong>产出</strong> 联网数据上报小节点</p>
+                <blockquote>
+                    <strong>kun、：</strong>你要真想学习硬件，一个嘉立创就够了，剩下的让 ChatGPT 带你，从 BOM 选型到自己动手焊接，源码对 AI 来讲都是小 case。
+                </blockquote>
             </div>
-            <!-- 阶段4 -->
-            <div class="phase-card">
-                <div class="phase-num">阶段 04</div>
-                <h3>📄 调试 & 简历化</h3>
-                <p>把踩过的坑变成简历上的亮点，整理项目描述。</p>
-                <ul class="task-list">
+        </div>
+
+        <!-- 阶段4 -->
+        <div class="phase-item">
+            <div class="phase-head">
+                <span class="num">阶段 4</span>
+                <h3>📄 调试 &amp; 简历化</h3>
+            </div>
+            <div class="phase-body">
+                <p class="desc">把踩过的坑变成简历上的亮点，整理项目描述。</p>
+                <ul>
                     <li>记录所有调试过程</li>
                     <li>用 STAR 法则写项目</li>
                     <li>整理原理图/PCB/代码</li>
                     <li>模拟面试官提问</li>
                 </ul>
-                <div style="margin-top: 0.8rem;"><span class="highlight-tag">产出</span> 简历项目 + 面试话术</div>
+                <p class="output"><strong>产出</strong> 简历项目 + 面试话术</p>
+                <blockquote>
+                    <strong>hjs：</strong>先把基础模电数电通信过一遍，然后买个 ESP32 直接搓一个项目，不要买套件，自己选型硬件，再学画板设计 PCB。
+                </blockquote>
             </div>
         </div>
 
-        <!-- 调试方法论 -->
-        <div class="debug-section">
-            <h2 style="font-size: 1.5rem; font-weight: 600; display: flex; gap: 8px;">🔧 硬件调试系统化排查法</h2>
-            <p style="color: #475569; margin-top: 0.3rem;">不要瞎猜，按顺序来。这套思路本身就是简历里的“技术亮点”。</p>
-            <div class="debug-grid">
-                <div class="debug-step">
-                    <div class="step-num">01</div>
-                    <h4>电源和地</h4>
-                    <p>测所有电源对地阻抗，确认无短路。上电后测各电压轨是否正常。</p>
-                </div>
-                <div class="debug-step">
-                    <div class="step-num">02</div>
-                    <h4>基础信号</h4>
-                    <p>复位信号、时钟信号、使能脚电平。芯片是否正常工作。</p>
-                </div>
-                <div class="debug-step">
-                    <div class="step-num">03</div>
-                    <h4>通信连接</h4>
-                    <p>TX/RX 是否接反？I2C 上拉？地址冲突？用逻辑分析仪看波形。</p>
-                </div>
-                <div class="debug-step">
-                    <div class="step-num">04</div>
-                    <h4>焊接检查</h4>
-                    <p>放大镜看虚焊、连锡、器件方向。补焊或更换可疑器件。</p>
-                </div>
-                <div class="debug-step">
-                    <div class="step-num">05</div>
-                    <h4>交叉验证</h4>
-                    <p>换板子、换模块，定位问题范围。对比正常板子电压/波形。</p>
-                </div>
-            </div>
-            <div style="background: #eef6ff; padding: 1rem 1.5rem; border-radius: 1rem; margin-top: 1.5rem; border-left: 5px solid #2563eb;">
-                <p style="color: #1e3a8a; font-weight: 500; margin: 0;">💡 举例：串口无输出 → 先测电源、再测复位、再测晶振起振、最后查焊接。定位到是复位电容容值错误，这就是简历里真实的问题解决案例。</p>
-            </div>
-        </div>
+    </div>
 
-        <!-- 简历怎么写 -->
-        <div class="resume-block">
-            <h2>📝 简历项目描述 · 对比示例</h2>
-            <div class="resume-flex">
-                <div class="resume-bad">
-                    <h3>❌ 模糊写法 <span>减分</span></h3>
-                    <p>“参与STM32温湿度采集项目，负责硬件部分。”</p>
-                    <small>面试官：你具体干了什么？解决了什么问题？</small>
-                </div>
-                <div class="resume-good">
-                    <h3>✅ 结果导向写法 <span>加分</span></h3>
-                    <p><strong>背景：</strong>设计并制作STM32温湿度采集板，实现环境数据采集与串口显示。</p>
-                    <p><strong>行动：</strong>独立完成原理图（LDO、MCU外围、传感器接口）、PCB Layout、打样焊接调试；编写驱动读取SHT30并通过串口发送。</p>
-                    <p><strong>结果/亮点：</strong>板子一次打样成功；调试中串口无数据，通过测晶振起振和复位电平，定位为晶振负载电容不匹配，调整后通信正常。</p>
-                    <small>有流程、有排查、有结果，一看就是亲手做过。</small>
-                </div>
-            </div>
-            <div style="background: #1e293b; border-radius: 1rem; padding: 1rem 1.4rem; margin-top: 1.5rem; border-left: 5px solid #3b82f6;">
-                <p style="color: #e2e8f0; margin: 0;">📌 关键：用动词开头（设计、完成、编写、调试、定位），用数据或具体现象说话。</p>
-            </div>
-        </div>
+    <!-- ===== 网友观点 ===== -->
+    <h2>网友核心观点</h2>
 
-        <!-- 资源提醒与星火计划 -->
-        <div class="resource-tip">
-            <div class="left">
-                <div class="icon">📚</div>
-                <div>
-                    <p>关于嘉立创开源广场 & 星火计划</p>
-                    <div class="small-note">很多项目缺源码、复刻难度高。建议：以软带硬，用成熟开发板+扩展板，把精力放在硬件交互逻辑上。星火计划可报销物料，但别追求复杂项目，先做通自己的小闭环。</div>
-                </div>
-            </div>
-            <a href="#" class="btn-ghost" style="pointer-events: none; opacity: 0.8;">参考 · 不盲从</a>
+    <div class="quotes">
+        <div class="quote-item">
+            <h4>✋ 必须动手</h4>
+            <p>“硬件你必须自己动手，你不动手压根学不会。”光看开源项目学不会硬件。</p>
+            <span class="from">yundou、AiingJan 等</span>
         </div>
-
-        <!-- 最后鼓励 -->
-        <div style="background: linear-gradient(135deg, #eef2ff, #ffffff); border-radius: 2rem; padding: 1.8rem 2rem; border: 1px solid #dbe5f0; margin-top: 1.8rem;">
-            <p style="font-size: 1.2rem; font-weight: 600; color: #0f172a; margin-bottom: 0.5rem;">🚀 先走通一遍，再谈复杂</p>
-            <p style="color: #334155;">选一个极小的闭环（比如温湿度采集+串口显示），把原理图→PCB→打样→焊接→调试→代码全流程走一遍。每一个坑，都是你简历上真实的项目经验。</p>
+        <div class="quote-item">
+            <h4>🤖 AI 补源码</h4>
+            <p>“源码这东西没啥复刻的必要，用 AI 辅助你一步步写都可以。”缺源码反而逼你动脑子。</p>
+            <span class="from">yundou、kun、whale</span>
         </div>
-
-        <div class="footer-note">
-            硬件学习计划 · 可打印 / 可分享 · 一步一个脚印
+        <div class="quote-item">
+            <h4>🚀 ESP32 开局</h4>
+            <p>“先拿 ESP32 随便做个小东西把原理图到打板焊接走一遍。”成本低、容错高、自带 WiFi。</p>
+            <span class="from">肏屎皇、hjs</span>
+        </div>
+        <div class="quote-item">
+            <h4>🧪 先飞线再打样</h4>
+            <p>“第一块板子别急着画太复杂的，先拿洞洞板飞线把电路跑通再去打样。”省时省力。</p>
+            <span class="from">yys222</span>
+        </div>
+        <div class="quote-item">
+            <h4>🛠️ 工具推荐</h4>
+            <p>电烙铁、热风枪、万用表必备，还有锡膏、镊子、助焊剂、吸锡带。能白嫖就白嫖。</p>
+            <span class="from">NULL000</span>
+        </div>
+        <div class="quote-item">
+            <h4>📚 项目驱动</h4>
+            <p>“用项目驱动学习，先从最小系统板开始，然后去开源广场做一些好复刻的项目。”</p>
+            <span class="from">NULL000、hjs</span>
         </div>
     </div>
+
+    <!-- ===== 调试方法 ===== -->
+    <h2>硬件调试系统化排查法</h2>
+    <p style="font-size:0.9375rem; color:var(--text-secondary); margin-bottom:8px;">
+        不要瞎猜，按顺序来。这套思路写进简历，面试官能看到你的工程素养。
+    </p>
+
+    <ol class="steps">
+        <li>
+            <strong>飞线预验证</strong>
+            打样前先用洞洞板飞线跑通核心电路，提前暴露设计问题。
+        </li>
+        <li>
+            <strong>电源和地</strong>
+            测所有电源对地阻抗，确认无短路。上电后测各电压轨是否正常。
+        </li>
+        <li>
+            <strong>基础信号</strong>
+            复位信号、时钟信号、使能脚电平。芯片是否正常工作。
+        </li>
+        <li>
+            <strong>通信连接</strong>
+            TX/RX 是否接反？I2C 上拉？地址冲突？用逻辑分析仪看波形。
+        </li>
+        <li>
+            <strong>焊接检查</strong>
+            放大镜看虚焊、连锡、器件方向。补焊或更换可疑器件。
+        </li>
+        <li>
+            <strong>交叉验证</strong>
+            换板子、换模块，定位问题范围。对比正常板子电压/波形。
+        </li>
+    </ol>
+
+    <div class="callout callout--attention">
+        <strong>💡 举例：</strong>串口无输出 → 先测电源、再测复位、再测晶振起振、最后查焊接。定位到是复位电容容值错误，这就是简历里真实的问题解决案例。
+    </div>
+
+    <!-- ===== 简历对比 ===== -->
+    <h2>简历项目描述 · 对比</h2>
+
+    <div class="compare">
+        <div class="compare-card compare-card--bad">
+            <h4>❌ 模糊写法</h4>
+            <p>“参与STM32温湿度采集项目，负责硬件部分。”</p>
+            <small>面试官：你具体干了什么？解决了什么问题？</small>
+        </div>
+        <div class="compare-card compare-card--good">
+            <h4>✅ 结果导向写法</h4>
+            <p><strong>背景：</strong>设计并制作ESP32温湿度采集板，实现环境数据采集与WiFi上报。</p>
+            <p><strong>行动：</strong>先用洞洞板飞线验证核心电路，再完成原理图、PCB Layout、打样焊接调试；无现成源码，借助AI辅助完成驱动开发。</p>
+            <p><strong>结果：</strong>板子一次打样成功；调试中串口无数据，通过测晶振起振和复位电平，定位为晶振负载电容不匹配，调整后通信正常。</p>
+            <small>有流程、有排查、有AI辅助、有结果。</small>
+        </div>
+    </div>
+
+    <div class="callout callout--success">
+        <strong>📌 关键：</strong>用动词开头（设计、完成、编写、调试、定位），用数据或具体现象说话。可以加一句“在无源码情况下借助AI完成驱动开发”，体现学习能力。
+    </div>
+
+    <!-- ===== 资源提醒 ===== -->
+    <h2>资源提醒</h2>
+
+    <div class="resource">
+        <span class="icon">📚</span>
+        <div>
+            <h4>关于嘉立创开源广场 &amp; 星火计划</h4>
+            <p>开源广场资料多但很多缺源码、复刻难度高。网友建议：以项目驱动学习，先做最小系统，再做开源广场里好复刻的项目，逐步进阶。星火计划能报销物料，但别为了报销去追复杂项目。嘉立创打样经常有免费券，前期花不了多少钱。</p>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- ===== CTA ===== -->
+    <h2 style="border-bottom:none; margin-bottom:12px; padding-bottom:0;">🚀 先飞线跑通，再打样画板</h2>
+    <p style="font-size:1rem; color:var(--text-secondary); max-width:720px;">
+        选一个极小的闭环（比如ESP32温湿度采集+串口显示），先用洞洞板飞线验证，再画原理图→PCB→打样→焊接→调试→代码全流程走一遍。每一个坑，都是你简历上真实的项目经验。网友说了：<strong style="color:var(--text);">硬件必须自己动手，你不动手压根学不会。</strong>
+    </p>
+
+</div>
 </body>
 </html>
